@@ -1,1 +1,9 @@
-@import "./reset.scss"
+@import "./reset.scss";
+@import "./typography.scss";
+
+body {
+  background-color: #1C1C20;
+  font-family: "Raleway";
+  font-weight: 400;
+  color: #fff;
+}
