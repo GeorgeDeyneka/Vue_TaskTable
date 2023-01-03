@@ -3,22 +3,10 @@
     style="width: 1200px; height: 200px"
     class="ag-theme-mycustomtheme"
     :columnDefs="columnDefs"
-    :rowData="rowData"
+    :rowData="dataForTable"
   >
   </ag-grid-vue>
 </template>
-
-<!-- {
-	?val1: random string, length 10,
-  ?val2: random float 2 decimal,
-  ?val3: random float 4 decimal,
-  ?val4: random int,
-  ?val5: random int,
-  val6: random img path,
-  ?val7: random string, length 10,
-  val8: одно из 5ти значений строк [str1, str2, str3, str4, str5]
-
-} -->
 
 <script>
 import "ag-grid-community/styles/ag-grid.css";
@@ -48,6 +36,18 @@ export default {
       ],
 
       dataForTable: [],
+
+      columnDefs: [
+        { headerName: "First column", field: "imgPath" },
+        { headerName: "Second column", field: "randStr1" },
+        { headerName: "Third column", field: "floatDec2" },
+        {
+          headerName: "Fourth column",
+          field: "randomInt1 randomInt2",
+        },
+        { headerName: "Fifth column", field: "randStr2" },
+        { headerName: "Sixth column", field: "randStrFromArr" },
+      ],
     };
   },
 
@@ -67,8 +67,6 @@ export default {
     },
 
     generateRandomData(num) {
-      const arr = [];
-
       for (let i = 0; i < num; i++) {
         const indexUrl = this.getRandomInt(0, this.ARR_URLS_IMAGES.length - 1);
         const indexStr = this.getRandomInt(0, this.ARR_STR.length - 1);
@@ -84,40 +82,15 @@ export default {
           randStrFromArr: this.ARR_STR[indexStr],
         };
 
-        arr.push(newElem);
+        this.dataForTable.push(newElem);
       }
-      return arr;
     },
   },
   components: {
     AgGridVue,
   },
   mounted() {
-    this.dataForTable = this.generateRandomData(8);
-    console.log(this.dataForTable);
-  },
-  setup() {
-    return {
-      columnDefs: [
-        { headerName: "First column", field: "make" },
-        { headerName: "Second column", field: "model" },
-        { headerName: "Third column", field: "price" },
-        { headerName: "Fourth column", field: "price" },
-        { headerName: "Fifth column", field: "price" },
-        { headerName: "Sixth column", field: "price" },
-      ],
-      rowData: [
-        { make: "Toyota", model: "Celica", price: 35000 },
-        { make: "Ford", model: "Mondeo", price: 32000 },
-        { make: "Porsche", model: "Boxster", price: 72000 },
-        { make: "Porsche", model: "Boxster", price: 72000 },
-        { make: "Porsche", model: "Boxster", price: 72000 },
-        { make: "Porsche", model: "Boxster", price: 72000 },
-        { make: "Porsche", model: "Boxster", price: 72000 },
-        { make: "Porsche", model: "Boxster", price: 72000 },
-        { make: "Porsche", model: "Boxster", price: 72000 },
-      ],
-    };
+    this.generateRandomData(100);
   },
 };
 </script>
